@@ -1,6 +1,6 @@
 module portfolio-backend
 
-go 1.22.1
+go 1.23
 
 require (
 	github.com/aws/aws-sdk-go-v2 v1.32.4 // indirect
