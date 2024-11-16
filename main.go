@@ -16,5 +16,7 @@ func main() {
 	r.DELETE("/projects/:title", handlers.DeleteProject)
 	r.PUT("/projects/:title", handlers.UpdateProject)
 
+	r.POST("/contact", handlers.SendEmail)
+
 	r.Run(":8080")
 }
