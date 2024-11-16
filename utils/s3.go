@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 
@@ -55,19 +54,7 @@ func (s *S3Client) PutObject(key string, content []byte) error {
 	_, err := s.Client.PutObject(context.TODO(), &s3.PutObjectInput{
 		Bucket: aws.String(s.Bucket),
 		Key:    aws.String(key),
-		Body:   ioutil.NopCloser(bytes.NewReader(content)),
+		Body:   bytes.NewReader(content),
 	})
 	return err
-}
-
-func (s *S3Client) UploadFile(key string, body io.Reader) (string, error) {
-	_, err := s.Client.PutObject(context.TODO(), &s3.PutObjectInput{
-		Bucket: aws.String(s.Bucket),
-		Key:    aws.String(key),
-		Body:   ioutil.NopCloser(body),
-	})
-	if err != nil {
-		return "", fmt.Errorf("failed to upload file: %v", err)
-	}
-	return fmt.Sprintf("https://%s.s3.amazonaws.com/%s", s.Bucket, key), nil
 }
